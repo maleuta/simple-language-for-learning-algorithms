@@ -16,20 +16,21 @@
   - Sposób realizacji skanera/parsera: Wykorzystanie generatora PLY (Python Lex-Yacc). Skaner bazuje na wyrażeniach regularnych, a parser implementuje gramatykę bezkontekstową typu LALR.
 
 3. Opis tokenów:
-| Kod Tokena   | Reguła / Wartość              | Opis                                                         |
-|--------------|------------------------------|--------------------------------------------------------------|
-| BEGIN / END  | BEGIN, END                   | Granice bloku głównego programu                              |
-| IF / THEN / ELSE | IF, THEN, ELSE           | Słowa kluczowe instrukcji warunkowej                         |
-| WHILE / DO   | WHILE, DO                    | Słowa kluczowe pętli warunkowej                              |
-| WRITE / READ | WRITE, READ                  | Funkcje wejścia (klawiatura) i wyjścia (konsola)             |
-| IDENTIFIER   | [a-zA-Z_][a-zA-Z0-9_]*       | Nazwy zmiennych (zaczynające się od litery lub podkreślnika) |
-| INTEGER      | [0-9]+                       | Liczby całkowite                                             |
-| FLOAT        | [0-9]+\.[0-9]+               | Liczby zmiennoprzecinkowe                                    |
-| ASSIGN       | :=                           | Operator przypisania wartości                                |
-| RELOP        | =, !=, <, >, <=, >=          | Operatory porównania logicznego (relacyjne)                  |
-| MATH_OP      | +, -, *, /                   | Podstawowe operatory arytmetyczne                            |
-| SEMICOLON    | ;                            | Separator instrukcji                                         |
-| DOT          | .                            | Znak kończący strukturę programu                             |
+
+| Kod Tokena        | Reguła / Wartość        | Opis                                                         |
+|-------------------|------------------------|--------------------------------------------------------------|
+| BEGIN / END       | BEGIN, END             | Granice bloku głównego programu                              |
+| IF / THEN / ELSE  | IF, THEN, ELSE         | Słowa kluczowe instrukcji warunkowej                         |
+| WHILE / DO        | WHILE, DO              | Słowa kluczowe pętli warunkowej                              |
+| WRITE / READ      | WRITE, READ            | Funkcje wejścia (klawiatura) i wyjścia (konsola)             |
+| IDENTIFIER        | [a-zA-Z_][a-zA-Z0-9_]* | Nazwy zmiennych (zaczynające się od litery lub podkreślnika) |
+| INTEGER           | [0-9]+                 | Liczby całkowite                                             |
+| FLOAT             | [0-9]+\.[0-9]+         | Liczby zmiennoprzecinkowe                                    |
+| ASSIGN            | :=                     | Operator przypisania wartości                                |
+| RELOP             | =, !=, <, >, <=, >=    | Operatory porównania logicznego (relacyjne)                  |
+| MATH_OP           | +, -, *, /             | Podstawowe operatory arytmetyczne                            |
+| SEMICOLON         | ;                      | Separator instrukcji                                         |
+| DOT               | .                      | Znak kończący strukturę programu                             |
 
 4. Gramatyka formatu:
 <program> ::= BEGIN <statements> END "."
