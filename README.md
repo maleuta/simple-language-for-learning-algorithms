@@ -33,30 +33,35 @@
 | DOT               | .                      | Znak kończący strukturę programu                             |
 
 4. Gramatyka formatu:
-<program> ::= BEGIN <statements> END "."
 
-<statements> ::= <statement>
-               | <statement> ";" <statements>
+```ebnf
+program     ::= "BEGIN" stmt_list "END" "."
+stmt_list   ::= stmt (";" stmt)*
 
-<statement> ::= <assignment>
-              | <if_statement>
-              | <while_statement>
-              | <write_statement>
-              | <read_statement>
+stmt        ::= assign_stmt
+              | if_stmt
+              | while_stmt
+              | io_stmt
 
-<assignment> ::= IDENTIFIER ":=" <expression>
+assign_stmt ::= IDENTIFIER ":=" expr
 
-<if_statement> ::= IF <condition> THEN <statement>
-                 | IF <condition> THEN <statement> ELSE <statement>
+if_stmt     ::= "IF" condition "THEN" stmt_list ("ELSE" stmt_list)?
 
-<while_statement> ::= WHILE <condition> DO <statement>
+while_stmt  ::= "WHILE" condition "DO" stmt_list
 
-<write_statement> ::= WRITE "(" <expression> ")"
+io_stmt     ::= "READ" IDENTIFIER
+              | "WRITE" expr
 
-<read_statement> ::= READ "(" IDENTIFIER ")"
+condition   ::= expr RELOP expr
 
-<condition> ::= <expression> <relop> <expression>
+expr        ::= term (("+" | "-") term)*
 
+term        ::= factor (("*" | "/") factor)*
+
+factor      ::= IDENTIFIER
+              | INTEGER
+              | FLOAT
+              | "(" expr ")"
 <relop> ::= "=" | "!=" | "<" | ">" | "<=" | ">="
 
 <expression> ::= <term>
