@@ -19,60 +19,55 @@
 
 | Kod Tokena        | Reguła / Wartość        | Opis                                                         |
 |-------------------|------------------------|--------------------------------------------------------------|
-| BEGIN / END       | BEGIN, END             | Granice bloku głównego programu                              |
-| IF / THEN / ELSE  | IF, THEN, ELSE         | Słowa kluczowe instrukcji warunkowej                         |
-| WHILE / DO        | WHILE, DO              | Słowa kluczowe pętli warunkowej                              |
-| WRITE / READ      | WRITE, READ            | Funkcje wejścia (klawiatura) i wyjścia (konsola)             |
+| BEGIN             | BEGIN                  | Otwarcie bloku programu                                      |
+| END               | END                    | Zamknięcie bloku programu                                    |
+| IF                | IF                     | Słowa kluczowe instrukcji warunkowej                         |
+| THEN              | THEN                   | Słowo kluczowe (wstęp do bloku prawdy)                       |
+| ELSE              | ELSE                   | Słowo kluczowe (blok alternatywny)                           |
+| WHILE             | WHILE                  | Początek pętli                                               |
+| DO                | DO                     | Wprowadzenie ciała pętli                                     |
+| WRITE             | WRITE                  | Instrukcja wyjścia                                           |
+| READ              | READ                   | Instrukcja wejścia                                           |
 | IDENTIFIER        | [a-zA-Z_][a-zA-Z0-9_]* | Nazwy zmiennych (zaczynające się od litery lub podkreślnika) |
 | INTEGER           | [0-9]+                 | Liczby całkowite                                             |
 | FLOAT             | [0-9]+\.[0-9]+         | Liczby zmiennoprzecinkowe                                    |
 | ASSIGN            | :=                     | Operator przypisania wartości                                |
 | RELOP             | =, !=, <, >, <=, >=    | Operatory porównania logicznego (relacyjne)                  |
-| MATH_OP           | +, -, *, /             | Podstawowe operatory arytmetyczne                            |
+| ADD_OP            | +, -,                  | Operatory o niskim priorytecie                               |
+| MULT_OP           | *, /                   | Operatory o wysokim priorytecie                              |
+| LPAREN            | (                      | Nawias otwierający                                           |
+| RPAREN            | )                      | Nawias zamykający                                            |
 | SEMICOLON         | ;                      | Separator instrukcji                                         |
 | DOT               | .                      | Znak kończący strukturę programu                             |
 
 4. Gramatyka formatu:
 
 ```ebnf
-program     ::= "BEGIN" stmt_list "END" "."
-stmt_list   ::= stmt (";" stmt)*
+program      ::= BEGIN stmt_list END DOT
 
-stmt        ::= assign_stmt
-              | if_stmt
-              | while_stmt
-              | io_stmt
+stmt_list    ::= stmt (SEMICOLON stmt)*
 
-assign_stmt ::= IDENTIFIER ":=" expr
+stmt         ::= assign_stmt
+               | if_stmt
+               | while_stmt
+               | io_stmt
 
-if_stmt     ::= "IF" condition "THEN" stmt_list ("ELSE" stmt_list)?
+assign_stmt  ::= IDENTIFIER ASSIGN expr
 
-while_stmt  ::= "WHILE" condition "DO" stmt_list
+if_stmt      ::= IF condition THEN stmt_list (ELSE stmt_list)?
 
-io_stmt     ::= "READ" IDENTIFIER
-              | "WRITE" expr
+while_stmt   ::= WHILE condition DO stmt_list
 
-condition   ::= expr RELOP expr
+io_stmt      ::= READ IDENTIFIER
+               | WRITE expr
 
-expr        ::= term (("+" | "-") term)*
+condition    ::= expr RELOP expr
 
-term        ::= factor (("*" | "/") factor)*
+expr         ::= term (ADD_OP term)*
 
-factor      ::= IDENTIFIER
-              | INTEGER
-              | FLOAT
-              | "(" expr ")"
-<relop> ::= "=" | "!=" | "<" | ">" | "<=" | ">="
+term         ::= factor (MULT_OP factor)*
 
-<expression> ::= <term>
-               | <expression> "+" <term>
-               | <expression> "-" <term>
-
-<term> ::= <factor>
-         | <term> "*" <factor>
-         | <term> "/" <factor>
-
-<factor> ::= IDENTIFIER
-           | INTEGER
-           | FLOAT
-           | "(" <expression> ")"
+factor       ::= IDENTIFIER
+               | INTEGER
+               | FLOAT
+               | LPAREN expr RPAREN
