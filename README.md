@@ -40,30 +40,6 @@
 | SEMICOLON         | ;                      | Separator instrukcji                                         |
 | DOT               | .                      | Znak kończący strukturę programu                             |
 
-4. Gramatyka formatu:
-
-```ebnf
-program      ::= BEGIN stmt_list END DOT
-
-stmt_list    ::= stmt (SEMICOLON stmt)*
-
-stmt         ::= assign_stmt
-               | if_stmt
-               | while_stmt
-               | io_stmt
-
-assign_stmt  ::= IDENTIFIER ASSIGN expr
-
-if_stmt      ::= IF condition THEN stmt_list (ELSE stmt_list)?
-
-while_stmt   ::= WHILE condition DO stmt_list
-
-io_stmt      ::= READ IDENTIFIER
-               | WRITE expr
-
-condition    ::= expr RELOP expr
-
-expr         ::= term (ADD_OP term)*
 
 term         ::= factor (MULT_OP factor)*
 
