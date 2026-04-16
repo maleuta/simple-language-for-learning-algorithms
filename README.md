@@ -11,7 +11,7 @@
 
   - Planowany wynik: Program, który po wczytaniu pliku wykonuje obliczenia, obsługuje interakcję z użytkownikiem (wejście/wyjście) i zarządza stanem zmiennych w czasie rzeczywistym.
 
-  - Język implementacji: Python 3.13
+  - Język implementacji: Python 3.11
 
   - Sposób realizacji skanera/parsera: Wykorzystanie generatora PLY (Python Lex-Yacc). Skaner bazuje na wyrażeniach regularnych, a parser implementuje gramatykę bezkontekstową typu LALR.
 
@@ -22,8 +22,8 @@
 | BEGIN             | BEGIN                  | Otwarcie bloku programu                                      |
 | END               | END                    | Zamknięcie bloku programu                                    |
 | IF                | IF                     | Słowa kluczowe instrukcji warunkowej                         |
-| THEN              | THEN                   | Słowo kluczowe (wstęp do bloku prawdy)                       |
-| ELSE              | ELSE                   | Słowo kluczowe (blok alternatywny)                           |
+| THEN              | THEN                   | Wprowadzenie bloku instrukcji po spełnieniu warunku          |
+| ELSE              | ELSE                   | Opcjonalny blok instrukcji                                   |
 | WHILE             | WHILE                  | Początek pętli                                               |
 | DO                | DO                     | Wprowadzenie ciała pętli                                     |
 | WRITE             | WRITE                  | Instrukcja wyjścia                                           |
