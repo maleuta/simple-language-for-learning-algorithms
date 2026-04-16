@@ -41,9 +41,3 @@
 | DOT               | .                      | Znak kończący strukturę programu                             |
 
 
-term         ::= factor (MULT_OP factor)*
-
-factor       ::= IDENTIFIER
-               | INTEGER
-               | FLOAT
-               | LPAREN expr RPAREN
