@@ -41,3 +41,42 @@
 | DOT               | .                      | Znak kończący strukturę programu                             |
 
 
+
+4. Gramatyka:
+"Program_sym" = "Blok" Kropka.
+
+"Blok" = "Begin_sym" "Instrukcja" {"Srednik" "Instrukcja"} "End_sym".
+
+"Instrukcja" =
+      "Instr_podstaw"
+    | "Instr_if"
+    | "Instr_while"
+    | "Instr_io"
+    | "Blok".
+
+"Instr_podstaw" = Ident "Przypisz" "Wyrazenie".
+
+"Instr_if" =
+    "If_sym" "Warunek" "Then_sym" "Instrukcja"
+    [ "Else_sym" "Instrukcja" ].
+
+"Instr_while" =
+    "While_sym" "Warunek" "Do_sym" "Instrukcja".
+
+"Instr_io" =
+      "Write_sym" "Wyrazenie"
+    | "Read_sym" Ident.
+
+"Warunek" = "Wyrazenie" "Relop" "Wyrazenie".
+
+"Wyrazenie" =
+    "Skladnik" { "Add_op" "Skladnik" }.
+
+"Skladnik" =
+    "Czynnik" { "Mult_op" "Czynnik" }.
+
+"Czynnik" =
+      Ident
+    | Integer
+    | Float
+    | Lewy_nawias "Wyrazenie" Prawy_nawias.
