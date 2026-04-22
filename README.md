@@ -43,6 +43,7 @@
 
 
 4. Gramatyka:
+
 "Program_sym" = "Blok" Kropka.
 
 "Blok" = "Begin_sym" "Instrukcja" {"Srednik" "Instrukcja"} "End_sym".
