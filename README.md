@@ -43,7 +43,7 @@
 
 
 4. Gramatyka:
-
+```
 <program> ::= BEGIN <stmt_list> END "."
 
 <stmt_list> ::= <stmt> (";" <stmt>)*
