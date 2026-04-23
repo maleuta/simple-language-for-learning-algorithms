@@ -17,15 +17,22 @@
 
 3. Opis tokenów:
 
-| Kod Tokena        | Reguła / Wartość        | Opis                                                         |
-|-------------------|------------------------|--------------------------------------------------------------|
-| BEGIN             | BEGIN                  | Otwarcie bloku programu                                      |
-| END               | END                    | Zamknięcie bloku programu                                    |
-| IF                | IF                     | Słowa kluczowe instrukcji warunkowej                         |
-| THEN              | THEN                   | Wprowadzenie bloku instrukcji po spełnieniu warunku          |
-| ELSE              | ELSE                   | Opcjonalny blok instrukcji                                   |
-| WHILE             | WHILE                  | Początek pętli                                               |
-| DO                | DO                     | Wprowadzenie ciała pętli                                     |
+| Kod Tokena        | Reguła / Wartość        | Opis                                                                      |
+|-------------------|------------------------|----------------------------------------------------------------------------|
+| BEGIN             | BEGIN                  | Otwarcie bloku programu                                                    |
+| END               | END                    | Zamknięcie bloku programu                                                  |
+| IF                | IF                     | Słowa kluczowe instrukcji warunkowej                                       |
+| THEN              | THEN                   | Wprowadzenie bloku instrukcji po spełnieniu warunku                        |
+| ELSE              | ELSE                   | Opcjonalny blok instrukcji                                                 |
+| WHILE             | WHILE                  | Początek pętli                                                             |
+| DO                | DO                     | Wprowadzenie ciała pętli                                                   |
+| FOR               | FOR                    | Słowo kluczowe rozpoczynające pętlę iteracyjną                             |
+| TO                | TO                     | Słowo kluczowe określające górną granicę zakresu w pętli FOR               |
+| RETURN            | RETURN                 | Instrukcja zwracająca wartość lub wymuszająca zakończenie bloku/programu   |
+| AND               | AND                    | Operator logiczny koniunkcji (prawda, gdy oba warunki są prawdziwe)        |
+| OR                | OR                     | Operator logiczny alternatywy (prawda, gdy minimum jeden warunek jest prawdziwy)       |
+| NOT               | NOT                    | Operator logiczny negacji (odwraca wartość logiczną)                       |
+| STR               | \"[^\"]*\"             | Ciąg znaków ujęty w podwójne cudzysłowy (np. "Witaj świecie")              |
 | WRITE             | WRITE                  | Instrukcja wyjścia                                           |
 | READ              | READ                   | Instrukcja wejścia                                           |
 | IDENTIFIER        | [a-zA-Z_][a-zA-Z0-9_]* | Nazwy zmiennych (zaczynające się od litery lub podkreślnika) |
@@ -44,37 +51,65 @@
 
 4. Gramatyka:
 ```
-<program> ::= BEGIN <stmt_list> END "."
+program : block DOT
 
-<stmt_list> ::= <stmt> (";" <stmt>)*
+block : BEGIN statement_list END
 
-<stmt> ::= <assign_stmt>
-         | <if_stmt>
-         | <while_stmt>
-         | <io_stmt>
-         | <compound_stmt>
+statement_list : statement_list statement SEMICOLON
+               | statement SEMICOLON
 
-<compound_stmt> ::= BEGIN <stmt_list> END
+statement : assignment_stmt
+          | if_stmt
+          | while_stmt
+          | for_stmt
+          | read_stmt
+          | write_stmt
+          | return_stmt
+          | block
+          | empty
 
-<assign_stmt> ::= IDENTIFIER ":=" <expr>
+empty : /* Pusta reguła pozwalająca na nadmiarowe średniki lub puste linie */
 
-<if_stmt> ::= IF <condition> THEN <stmt>
-            | IF <condition> THEN <stmt> ELSE <stmt>
+assignment_stmt : IDENTIFIER ASSIGN expression
 
-<while_stmt> ::= WHILE <condition> DO <stmt>
+if_stmt : IF expression THEN statement
+        | IF expression THEN statement ELSE statement
 
-<io_stmt> ::= WRITE <expr>
-            | READ IDENTIFIER
+while_stmt : WHILE expression DO statement
 
-<condition> ::= <expr> <relop> <expr>
+for_stmt : FOR IDENTIFIER ASSIGN expression TO expression DO statement
 
-<expr> ::= <term> (("+" | "-") <term>)*
+read_stmt : READ LPAREN IDENTIFIER RPAREN
 
-<term> ::= <factor> (("*" | "/") <factor>)*
+write_stmt : WRITE LPAREN expression RPAREN
 
-<factor> ::= IDENTIFIER
-           | INTEGER
-           | FLOAT
-           | "(" <expr> ")"
+return_stmt : RETURN expression
 
-<relop> ::= "=" | "!=" | "<" | ">" | "<=" | ">="
+/* Priorytet 1: Alternatywa logiczna (OR) */
+expression : expression OR logical_and_expr
+           | logical_and_expr
+
+/* Priorytet 2: Koniunkcja logiczna (AND) */
+logical_and_expr : logical_and_expr AND rel_expr
+                 | rel_expr
+
+/* Priorytet 3: Operatory relacyjne (=, !=, <, >, <=, >=) */
+rel_expr : math_expr RELOP math_expr
+         | math_expr
+
+/* Priorytet 4: Dodawanie i odejmowanie (+, -) */
+math_expr : math_expr ADD_OP term
+          | term
+
+/* Priorytet 5: Mnożenie i dzielenie (*, /) */
+term : term MULT_OP factor
+     | factor
+
+/* Priorytet 6: Czynniki bazowe, nawiasy, negacja, liczby ujemne i teksty */
+factor : IDENTIFIER
+       | INTEGER
+       | FLOAT
+       | STR
+       | LPAREN expression RPAREN
+       | NOT factor
+       | ADD_OP factor  /* Umożliwia zapisywanie liczb ujemnych, np. -5 */
