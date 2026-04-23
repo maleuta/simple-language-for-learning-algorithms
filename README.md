@@ -44,40 +44,37 @@
 
 4. Gramatyka:
 
-"Program_sym" = "Blok" Kropka.
+<program> ::= BEGIN <stmt_list> END "."
 
-"Blok" = "Begin_sym" "Instrukcja" {"Srednik" "Instrukcja"} "End_sym".
+<stmt_list> ::= <stmt> (";" <stmt>)*
 
-"Instrukcja" =
-      "Instr_podstaw"
-    | "Instr_if"
-    | "Instr_while"
-    | "Instr_io"
-    | "Blok".
+<stmt> ::= <assign_stmt>
+         | <if_stmt>
+         | <while_stmt>
+         | <io_stmt>
+         | <compound_stmt>
 
-"Instr_podstaw" = Ident "Przypisz" "Wyrazenie".
+<compound_stmt> ::= BEGIN <stmt_list> END
 
-"Instr_if" =
-    "If_sym" "Warunek" "Then_sym" "Instrukcja"
-    [ "Else_sym" "Instrukcja" ].
+<assign_stmt> ::= IDENTIFIER ":=" <expr>
 
-"Instr_while" =
-    "While_sym" "Warunek" "Do_sym" "Instrukcja".
+<if_stmt> ::= IF <condition> THEN <stmt>
+            | IF <condition> THEN <stmt> ELSE <stmt>
 
-"Instr_io" =
-      "Write_sym" "Wyrazenie"
-    | "Read_sym" Ident.
+<while_stmt> ::= WHILE <condition> DO <stmt>
 
-"Warunek" = "Wyrazenie" "Relop" "Wyrazenie".
+<io_stmt> ::= WRITE <expr>
+            | READ IDENTIFIER
 
-"Wyrazenie" =
-    "Skladnik" { "Add_op" "Skladnik" }.
+<condition> ::= <expr> <relop> <expr>
 
-"Skladnik" =
-    "Czynnik" { "Mult_op" "Czynnik" }.
+<expr> ::= <term> (("+" | "-") <term>)*
 
-"Czynnik" =
-      Ident
-    | Integer
-    | Float
-    | Lewy_nawias "Wyrazenie" Prawy_nawias.
+<term> ::= <factor> (("*" | "/") <factor>)*
+
+<factor> ::= IDENTIFIER
+           | INTEGER
+           | FLOAT
+           | "(" <expr> ")"
+
+<relop> ::= "=" | "!=" | "<" | ">" | "<=" | ">="
