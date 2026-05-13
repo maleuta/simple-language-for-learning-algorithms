@@ -17,40 +17,40 @@
 
 3. Opis tokenów:
 
-| Kod Tokena        | Reguła / Wartość        | Opis                                                                      |
-|-------------------|------------------------|----------------------------------------------------------------------------|
-| BEGIN             | BEGIN                  | Otwarcie bloku programu                                                    |
-| END               | END                    | Zamknięcie bloku programu                                                  |
-| IF                | IF                     | Słowa kluczowe instrukcji warunkowej                                       |
-| THEN              | THEN                   | Wprowadzenie bloku instrukcji po spełnieniu warunku                        |
-| ELSE              | ELSE                   | Opcjonalny blok instrukcji                                                 |
-| WHILE             | WHILE                  | Początek pętli                                                             |
-| DO                | DO                     | Wprowadzenie ciała pętli                                                   |
-| FOR               | FOR                    | Słowo kluczowe rozpoczynające pętlę iteracyjną                             |
-| TO                | TO                     | Słowo kluczowe określające górną granicę zakresu w pętli FOR               |
-| RETURN            | RETURN                 | Instrukcja zwracająca wartość lub wymuszająca zakończenie bloku/programu   |
-| AND               | AND                    | Operator logiczny koniunkcji (prawda, gdy oba warunki są prawdziwe)        |
-| OR                | OR                     | Operator logiczny alternatywy (prawda, gdy minimum jeden warunek jest prawdziwy)       |
-| NOT               | NOT                    | Operator logiczny negacji (odwraca wartość logiczną)
-
-| TRUE              | TRUE                   | Stała logiczna prawdy
-
-| FALSE             | FALSE                  | Stała logiczna fałszu
-
-| STR               | \"[^\"]*\"             | Ciąg znaków ujęty w podwójne cudzysłowy (np. "Witaj świecie")              |
-| WRITE             | WRITE                  | Instrukcja wyjścia                                           |
-| READ              | READ                   | Instrukcja wejścia                                           |
-| IDENTIFIER        | [a-zA-Z_][a-zA-Z0-9_]* | Nazwy zmiennych (zaczynające się od litery lub podkreślnika) |
-| INTEGER           | [0-9]+                 | Liczby całkowite                                             |
-| FLOAT             | [0-9]+\.[0-9]+         | Liczby zmiennoprzecinkowe                                    |
-| ASSIGN            | :=                     | Operator przypisania wartości                                |
-| RELOP             | =, !=, <, >, <=, >=    | Operatory porównania logicznego (relacyjne)                  |
-| ADD_OP            | +, -,                  | Operatory o niskim priorytecie                               |
-| MULT_OP           | *, /                   | Operatory o wysokim priorytecie                              |
-| LPAREN            | (                      | Nawias otwierający                                           |
-| RPAREN            | )                      | Nawias zamykający                                            |
-| SEMICOLON         | ;                      | Separator instrukcji                                         |
-| DOT               | .                      | Znak kończący strukturę programu                             |
+| Kod Tokena | Reguła | Opis |
+|---|---|---|
+| `BEGIN` | `BEGIN` | Otwarcie bloku programu |
+| `END` | `END` | Zamknięcie bloku programu |
+| `IF` | `IF` | Słowo kluczowe instrukcji warunkowej |
+| `THEN` | `THEN` | Wprowadzenie bloku instrukcji po spełnieniu warunku |
+| `ELSE` | `ELSE` | Opcjonalny blok instrukcji warunkowej |
+| `WHILE` | `WHILE` | Początek pętli dopóki |
+| `DO` | `DO` | Wprowadzenie ciała pętli |
+| `FOR` | `FOR` | Słowo kluczowe rozpoczynające pętlę iteracyjną |
+| `TO` | `TO` | Słowo kluczowe określające górną granicę w pętli FOR |
+| `RETURN` | `RETURN` | Instrukcja zwracająca wartość lub zamykająca blok/program |
+| `AND` | `AND` | Operator logiczny koniunkcji (prawda, gdy oba są prawdziwe) |
+| `OR` | `OR` | Operator logiczny alternatywy (prawda, gdy minimum jeden jest prawdziwy) |
+| `NOT` | `NOT` | Operator logiczny negacji (odwraca wartość logiczną) |
+| `TRUE` | `TRUE` | Stała logiczna prawdy |
+| `FALSE` | `FALSE` | Stała logiczna fałszu |
+| `STR` | `\"[^\"]*\"` | Ciąg znaków ujęty w podwójne cudzysłowy (np. "Witaj") |
+| `WRITE` | `WRITE` | Instrukcja wyjścia (wypisywanie na ekran) |
+| `READ` | `READ` | Instrukcja wejścia (czytanie od użytkownika) |
+| `IDENTIFIER` | `[a-zA-Z_][a-zA-Z0-9_]*` | Nazwy zmiennych (zaczynające się od litery lub podkreślnika) |
+| `INTEGER` | `[0-9]+` | Liczby całkowite |
+| `FLOAT` | `[0-9]+\.[0-9]+` | Liczby zmiennoprzecinkowe |
+| `ASSIGN` | `:=` | Operator przypisania wartości |
+| `RELOP` | `=`, `!=`, `<`, `>`, `<=`, `>=` | Operatory porównania logicznego (relacyjne) |
+| `ADD_OP` | `+`, `-` | Operatory arytmetyczne o niskim priorytecie |
+| `MULT_OP` | `*`, `/`, `MOD` | Operatory arytmetyczne o wysokim priorytecie (w tym reszta z dzielenia) |
+| `LPAREN` | `(` | Nawias okrągły otwierający (grupowanie wyrażeń) |
+| `RPAREN` | `)` | Nawias okrągły zamykający |
+| `LBRACKET` | `[` | Nawias kwadratowy otwierający (indeksowanie tablic) |
+| `RBRACKET` | `]` | Nawias kwadratowy zamykający (indeksowanie tablic) |
+| `SEMICOLON`| `;` | Separator instrukcji |
+| `DOT` | `.` | Znak kończący strukturę programu |
+| `COMMENT` | `//.*` lub `#.*` | Komentarze jednolinijkowe (ignorowane przez parser) |
 
 
 
