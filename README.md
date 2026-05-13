@@ -115,7 +115,7 @@ math_expr : math_expr ADD_OP term
 term : term MULT_OP factor
      | factor
 
-/* Priorytet 5: Mnożenie, dzielenie i modulo (*, /, MOD) */
+/* Priorytet 6: Mnożenie, dzielenie i modulo (*, /, MOD) */
 factor : IDENTIFIER
        | INTEGER
        | FLOAT
