@@ -110,6 +110,8 @@ factor : IDENTIFIER
        | INTEGER
        | FLOAT
        | STR
+       | TRUE
+       | FALSE
        | LPAREN expression RPAREN
        | NOT factor
        | ADD_OP factor  /* Umożliwia zapisywanie liczb ujemnych, np. -5 */
