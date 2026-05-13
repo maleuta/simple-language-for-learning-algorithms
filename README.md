@@ -85,9 +85,12 @@ write_stmt : WRITE LPAREN expression RPAREN
 
 return_stmt : RETURN expression
 
+/* Punkt wejścia dla wszystkich wyrażeń */
+expression : logical_expression
+
 /* Priorytet 1: Alternatywa logiczna (OR) */
-expression : expression OR logical_and_expr
-           | logical_and_expr
+logical_expression : logical_expression OR logical_and_expr
+                   | logical_and_expr
 
 /* Priorytet 2: Koniunkcja logiczna (AND) */
 logical_and_expr : logical_and_expr AND rel_expr
