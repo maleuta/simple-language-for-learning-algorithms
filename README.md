@@ -76,6 +76,7 @@ statement : assignment_stmt
 empty : /* Pusta reguła pozwalająca na nadmiarowe średniki lub puste linie */
 
 assignment_stmt : IDENTIFIER ASSIGN expression
+                | IDENTIFIER LBRACKET expression RBRACKET ASSIGN expression
 
 if_stmt : IF expression THEN statement
         | IF expression THEN statement ELSE statement
@@ -85,6 +86,7 @@ while_stmt : WHILE expression DO statement
 for_stmt : FOR IDENTIFIER ASSIGN expression TO expression DO statement
 
 read_stmt : READ LPAREN IDENTIFIER RPAREN
+          | READ LPAREN IDENTIFIER LBRACKET expression RBRACKET RPAREN
 
 write_stmt : WRITE LPAREN expression RPAREN
 
@@ -113,7 +115,7 @@ math_expr : math_expr ADD_OP term
 term : term MULT_OP factor
      | factor
 
-/* Priorytet 6: Czynniki bazowe, nawiasy, negacja, liczby ujemne i teksty */
+/* Priorytet 5: Mnożenie, dzielenie i modulo (*, /, MOD) */
 factor : IDENTIFIER
        | INTEGER
        | FLOAT
