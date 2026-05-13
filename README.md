@@ -31,7 +31,12 @@
 | RETURN            | RETURN                 | Instrukcja zwracająca wartość lub wymuszająca zakończenie bloku/programu   |
 | AND               | AND                    | Operator logiczny koniunkcji (prawda, gdy oba warunki są prawdziwe)        |
 | OR                | OR                     | Operator logiczny alternatywy (prawda, gdy minimum jeden warunek jest prawdziwy)       |
-| NOT               | NOT                    | Operator logiczny negacji (odwraca wartość logiczną)                       |
+| NOT               | NOT                    | Operator logiczny negacji (odwraca wartość logiczną)
+
+| TRUE              | TRUE                   | Stała logiczna prawdy
+
+| FALSE             | FALSE                  | Stała logiczna fałszu
+
 | STR               | \"[^\"]*\"             | Ciąg znaków ujęty w podwójne cudzysłowy (np. "Witaj świecie")              |
 | WRITE             | WRITE                  | Instrukcja wyjścia                                           |
 | READ              | READ                   | Instrukcja wejścia                                           |
