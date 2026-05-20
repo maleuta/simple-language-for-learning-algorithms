@@ -19,8 +19,10 @@
 
 | Kod Tokena | Reguła | Opis |
 |---|---|---|
-| `BEGIN` | `BEGIN` | Otwarcie bloku programu |
-| `END` | `END` | Zamknięcie bloku programu |
+| `BEGIN` | `BEGIN` | Otwarcie bloku programu lub funkcji |
+| `END` | `END` | Zamknięcie bloku programu lub funkcji |
+| `DEF` | `DEF` | Słowo kluczowe definicji funkcji/procedury |
+| `ARRAY` | `ARRAY` | Słowo kluczowe deklaracji tablicy |
 | `IF` | `IF` | Słowo kluczowe instrukcji warunkowej |
 | `THEN` | `THEN` | Wprowadzenie bloku instrukcji po spełnieniu warunku |
 | `ELSE` | `ELSE` | Opcjonalny blok instrukcji warunkowej |
@@ -37,17 +39,18 @@
 | `STR` | `\"[^\"]*\"` | Ciąg znaków ujęty w podwójne cudzysłowy (np. "Witaj") |
 | `WRITE` | `WRITE` | Instrukcja wyjścia (wypisywanie na ekran) |
 | `READ` | `READ` | Instrukcja wejścia (czytanie od użytkownika) |
-| `IDENTIFIER` | `[a-zA-Z_][a-zA-Z0-9_]*` | Nazwy zmiennych (zaczynające się od litery lub podkreślnika) |
+| `IDENTIFIER` | `[a-zA-Z_][a-zA-Z0-9_]*` | Nazwy zmiennych i funkcji (zaczynające się od litery lub podkreślnika) |
 | `INTEGER` | `[0-9]+` | Liczby całkowite |
 | `FLOAT` | `[0-9]+\.[0-9]+` | Liczby zmiennoprzecinkowe |
 | `ASSIGN` | `:=` | Operator przypisania wartości |
 | `RELOP` | `=`, `!=`, `<`, `>`, `<=`, `>=` | Operatory porównania logicznego (relacyjne) |
 | `ADD_OP` | `+`, `-` | Operatory arytmetyczne o niskim priorytecie |
 | `MULT_OP` | `*`, `/`, `MOD` | Operatory arytmetyczne o wysokim priorytecie (w tym reszta z dzielenia) |
-| `LPAREN` | `(` | Nawias okrągły otwierający (grupowanie wyrażeń) |
+| `LPAREN` | `(` | Nawias okrągły otwierający (grupowanie wyrażeń, argumenty funkcji) |
 | `RPAREN` | `)` | Nawias okrągły zamykający |
-| `LBRACKET` | `[` | Nawias kwadratowy otwierający (indeksowanie tablic) |
-| `RBRACKET` | `]` | Nawias kwadratowy zamykający (indeksowanie tablic) |
+| `LBRACKET` | `[` | Nawias kwadratowy otwierający (indeksowanie i deklaracja tablic) |
+| `RBRACKET` | `]` | Nawias kwadratowy zamykający (indeksowanie i deklaracja tablic) |
+| `COMMA` | `,` | Separator argumentów w wywołaniach i definicjach funkcji |
 | `SEMICOLON`| `;` | Separator instrukcji |
 | `DOT` | `.` | Znak kończący strukturę programu |
 | `COMMENT` | `//.*` lub `#.*` | Komentarze jednolinijkowe (ignorowane przez parser) |
