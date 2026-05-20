@@ -153,3 +153,9 @@ factor : IDENTIFIER
        | NOT factor
        | ADD_OP factor
 ```
+5. Informacje o stosowanych generatorach i pakietach:
+   
+Projekt korzysta wyłącznie z wbudowanych bibliotek języka Python oraz z jednego pakietu zewnętrznego:
+- PLY (Python Lex-Yacc) - Narzędzie to implementuje narzędzia lex oraz yacc znane z języka C. Pakiet nie tworzy zewnętrznych plików ze skompilowanym parserem, a przetwarza gramatykę w locie przy pomocy refleksji języka Python (docstrings).
+- Moduł ply.lex odpowiada za tokenizację strumienia wejściowego na podstawie zdefiniowanych wyrażeń regularnych.
+- Moduł ply.yacc buduje drzewo parsowania LALR w oparciu o gramatykę zdefiniowaną w postaci funkcji i łańcuchów znakowych, wyłapując wczesne błędy syntaktyczne.
