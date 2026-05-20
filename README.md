@@ -159,3 +159,24 @@ Projekt korzysta wyłącznie z wbudowanych bibliotek języka Python oraz z jedne
 - PLY (Python Lex-Yacc) - Narzędzie to implementuje narzędzia lex oraz yacc znane z języka C. Pakiet nie tworzy zewnętrznych plików ze skompilowanym parserem, a przetwarza gramatykę w locie przy pomocy refleksji języka Python (docstrings).
 - Moduł ply.lex odpowiada za tokenizację strumienia wejściowego na podstawie zdefiniowanych wyrażeń regularnych.
 - Moduł ply.yacc buduje drzewo parsowania LALR w oparciu o gramatykę zdefiniowaną w postaci funkcji i łańcuchów znakowych, wyłapując wczesne błędy syntaktyczne.
+
+6. Krótka instrukcja obsługi:
+1) Wymagania: Python w wersji min. 3.11.
+
+2) Instalacja zależności: pip install ply
+
+3) Struktura plików:
+
+- ```lexer.py``` – plik skanera (leksera).
+
+- ```parser.py``` – plik parsera syntaktycznego oraz logika interpretera.
+
+- ```main.py``` – plik główny aplikacji.
+
+- ```skrypt.txt``` – plik z kodem w naszym języku.
+
+4) Uruchomienie interpretera:
+Otwórz terminal w katalogu z projektem i wykonaj polecenie:
+```python main.py skrypt.txt```
+
+5) W konsoli pojawią się ewentualne komunikaty wykonania (efekty instrukcji WRITE) lub prośby o wprowadzenie danych (READ).
