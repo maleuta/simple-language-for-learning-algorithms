@@ -56,7 +56,21 @@
 
 4. Gramatyka:
 ```
-program : block DOT
+/* Struktura ogólna programu */
+program : declaration_list main_block DOT
+
+declaration_list : declaration_list function_decl
+                 | empty
+
+function_decl : DEF IDENTIFIER LPAREN param_list RPAREN block
+
+param_list : param_list_nonempty
+           | empty
+
+param_list_nonempty : param_list_nonempty COMMA IDENTIFIER
+                    | IDENTIFIER
+
+main_block : block
 
 block : BEGIN statement_list END
 
@@ -64,16 +78,21 @@ statement_list : statement_list statement SEMICOLON
                | statement SEMICOLON
 
 statement : assignment_stmt
+          | array_decl
           | if_stmt
           | while_stmt
           | for_stmt
           | read_stmt
           | write_stmt
           | return_stmt
+          | function_call_stmt
           | block
           | empty
 
-empty : /* Pusta reguła pozwalająca na nadmiarowe średniki lub puste linie */
+empty : /* Pusta reguła */
+
+/* Instrukcje */
+array_decl : ARRAY IDENTIFIER LBRACKET expression RBRACKET
 
 assignment_stmt : IDENTIFIER ASSIGN expression
                 | IDENTIFIER LBRACKET expression RBRACKET ASSIGN expression
@@ -92,31 +111,36 @@ write_stmt : WRITE LPAREN expression RPAREN
 
 return_stmt : RETURN expression
 
-/* Punkt wejścia dla wszystkich wyrażeń */
+function_call_stmt : IDENTIFIER LPAREN arg_list RPAREN
+
+/* Wywołanie funkcji i listy argumentów */
+arg_list : arg_list_nonempty
+         | empty
+
+arg_list_nonempty : arg_list_nonempty COMMA expression
+                  | expression
+
+/* Wyrażenia z uwzględnieniem priorytetów */
 expression : logical_expression
 
-/* Priorytet 1: Alternatywa logiczna (OR) */
 logical_expression : logical_expression OR logical_and_expr
                    | logical_and_expr
 
-/* Priorytet 2: Koniunkcja logiczna (AND) */
 logical_and_expr : logical_and_expr AND rel_expr
                  | rel_expr
 
-/* Priorytet 3: Operatory relacyjne (=, !=, <, >, <=, >=) */
 rel_expr : math_expr RELOP math_expr
          | math_expr
 
-/* Priorytet 4: Dodawanie i odejmowanie (+, -) */
 math_expr : math_expr ADD_OP term
           | term
 
-/* Priorytet 5: Mnożenie i dzielenie (*, /) */
 term : term MULT_OP factor
      | factor
 
-/* Priorytet 6: Mnożenie, dzielenie i modulo (*, /, MOD) */
 factor : IDENTIFIER
+       | IDENTIFIER LBRACKET expression RBRACKET
+       | IDENTIFIER LPAREN arg_list RPAREN
        | INTEGER
        | FLOAT
        | STR
@@ -124,4 +148,5 @@ factor : IDENTIFIER
        | FALSE
        | LPAREN expression RPAREN
        | NOT factor
-       | ADD_OP factor  /* Umożliwia zapisywanie liczb ujemnych, np. -5 */
+       | ADD_OP factor
+```
