@@ -165,7 +165,7 @@ Projekt korzysta wyłącznie z wbudowanych bibliotek języka Python oraz z jedne
 
 1. Sklonuj repozytorium:
    ```bash
-   git clone [https://github.com/TwojLogin/twoje-repozytorium.git](https://github.com/TwojLogin/twoje-repozytorium.git)
+   git clone https://github.com/maleuta/simple-language-for-learning-algorithms.git
    cd twoje-repozytorium
    ```
 
