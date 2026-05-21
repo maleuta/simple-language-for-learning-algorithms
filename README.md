@@ -166,7 +166,7 @@ Projekt korzysta wyłącznie z wbudowanych bibliotek języka Python oraz z jedne
 1. Sklonuj repozytorium:
    ```bash
    git clone https://github.com/maleuta/simple-language-for-learning-algorithms.git
-   cd twoje-repozytorium
+   cd simple-language-for-learning-algorithms
    ```
 
 2. Zainstaluj wymagane zależności przy użyciu pliku requirements.txt:
