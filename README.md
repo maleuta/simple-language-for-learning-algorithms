@@ -1,10 +1,10 @@
 # Prosty język dla nauki algorytmów
 
-1. Dane studentów:
+## 1. Dane studentów:
   - Yuliya Matsulevich, matsyuliya@student.agh.edu.pl
   - Marta Ronchyk, martaronchyk@student.agh.edu.pl
 
-2. Założenia programu:
+## 2. Założenia programu:
   - Ogólne cele: Stworzenie przejrzystego środowiska do uruchamiania algorytmów bez zbędnego "szumu" składniowego. Język wspiera podstawowe struktury danych i sterowania.
 
   - Rodzaj translatora: Interpreter
@@ -15,7 +15,7 @@
 
   - Sposób realizacji skanera/parsera: Wykorzystanie generatora PLY (Python Lex-Yacc). Skaner bazuje na wyrażeniach regularnych, a parser implementuje gramatykę bezkontekstową typu LALR.
 
-3. Opis tokenów:
+## 3. Opis tokenów:
 
 | Kod Tokena | Reguła | Opis |
 |---|---|---|
@@ -57,7 +57,7 @@
 
 
 
-4. Gramatyka:
+## 4. Gramatyka:
 ```
 /* Struktura ogólna programu */
 program : declaration_list main_block DOT
@@ -153,19 +153,26 @@ factor : IDENTIFIER
        | NOT factor
        | ADD_OP factor
 ```
-5. Informacje o stosowanych generatorach i pakietach:
+## 5. Informacje o stosowanych generatorach i pakietach:
    
 Projekt korzysta wyłącznie z wbudowanych bibliotek języka Python oraz z jednego pakietu zewnętrznego:
 - PLY (Python Lex-Yacc) - Narzędzie to implementuje narzędzia lex oraz yacc znane z języka C. Pakiet nie tworzy zewnętrznych plików ze skompilowanym parserem, a przetwarza gramatykę w locie przy pomocy refleksji języka Python (docstrings).
 - Moduł ply.lex odpowiada za tokenizację strumienia wejściowego na podstawie zdefiniowanych wyrażeń regularnych.
 - Moduł ply.yacc buduje drzewo parsowania LALR w oparciu o gramatykę zdefiniowaną w postaci funkcji i łańcuchów znakowych, wyłapując wczesne błędy syntaktyczne.
 
-6. Krótka instrukcja obsługi:
-1) Wymagania: Python w wersji min. 3.11.
+## 6. Wymagania i instalacja
+Projekt korzysta wyłącznie z wbudowanych bibliotek języka Python oraz z jednego pakietu zewnętrznego (PLY).
 
-2) Instalacja zależności: pip install ply
+1. Sklonuj repozytorium:
+   ```bash
+   git clone [https://github.com/TwojLogin/twoje-repozytorium.git](https://github.com/TwojLogin/twoje-repozytorium.git)
+   cd twoje-repozytorium
+   ```
 
-3) Struktura plików:
+2. Zainstaluj wymagane zależności przy użyciu pliku requirements.txt:
+```pip install -r requirements.txt ```
+
+3. Struktura plików:
 
 - ```lexer.py``` – plik skanera (leksera).
 
@@ -175,8 +182,8 @@ Projekt korzysta wyłącznie z wbudowanych bibliotek języka Python oraz z jedne
 
 - ```skrypt.txt``` – plik z kodem w naszym języku.
 
-4) Uruchomienie interpretera:
+4. Uruchomienie interpretera:
 Otwórz terminal w katalogu z projektem i wykonaj polecenie:
 ```python main.py skrypt.txt```
 
-5) W konsoli pojawią się ewentualne komunikaty wykonania (efekty instrukcji WRITE) lub prośby o wprowadzenie danych (READ).
+5. W konsoli pojawią się ewentualne komunikaty wykonania (efekty instrukcji WRITE) lub prośby o wprowadzenie danych (READ).
