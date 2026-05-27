@@ -43,7 +43,7 @@
 | `INTEGER` | `[0-9]+` | Liczby całkowite |
 | `FLOAT` | `[0-9]+\.[0-9]+` | Liczby zmiennoprzecinkowe |
 | `ASSIGN` | `:=` | Operator przypisania wartości |
-| `RELOP` | `=`, `!=`, `<`, `>`, `<=`, `>=` | Operatory porównania logicznego (relacyjne) |
+| `RELOP` | `==`, `!=`, `<`, `>`, `<=`, `>=` | Operatory porównania logicznego (relacyjne) |
 | `ADD_OP` | `+`, `-` | Operatory arytmetyczne o niskim priorytecie |
 | `MULT_OP` | `*`, `/`, `MOD` | Operatory arytmetyczne o wysokim priorytecie (w tym reszta z dzielenia) |
 | `LPAREN` | `(` | Nawias okrągły otwierający (grupowanie wyrażeń, argumenty funkcji) |
