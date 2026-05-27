@@ -1,13 +1,18 @@
 BEGIN
     WRITE("Podaj liczbe iteracji:");
     READ(n);
-    
+
     FOR i := 1 TO n DO
     BEGIN
+
         IF i < 3 THEN
+        BEGIN
             WRITE("Mniejsze niz 3");
+        END
         ELSE
+        BEGIN
             WRITE("Duze liczby");
-        ;
+        END;
+
     END;
 END.
