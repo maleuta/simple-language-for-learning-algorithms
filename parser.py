@@ -371,6 +371,11 @@ def evaluate_expression(expr):
 
         return value
 
+    # ARRAY
+    elif op == 'ARRAY_GET':
+        idx = evaluate_expression(expr[2])
+        return variables[expr[1]][idx]
+    
     return 0
 
 
