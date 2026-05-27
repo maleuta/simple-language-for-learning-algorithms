@@ -460,6 +460,17 @@ def execute_ast(node):
 
             variables[var_name] += 1
 
+    # ARRAY declaration
+    elif op == 'ARRAY_DECL':
+        rozmiar = evaluate_expression(node[2])
+        variables[node[1]] = [0] * rozmiar
+
+    # ARRAY przypisanie do indeksu tabeli
+    elif op == 'ARRAY_ASSIGN':
+        wartosc = evaluate_expression(node[3])
+        indeks = evaluate_expression(node[2])
+        variables[node[1]][indeks] = wartosc
+
 
 # =========================
 # MAIN INTERPRETER
