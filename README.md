@@ -187,3 +187,38 @@ Otwórz terminal w katalogu z projektem i wykonaj polecenie:
 ```python main.py skrypt.txt```
 
 5. W konsoli pojawią się ewentualne komunikaty wykonania (efekty instrukcji WRITE) lub prośby o wprowadzenie danych (READ).
+
+## 7. Przykładowy program:
+
+
+```
+BEGIN
+    x := 5;
+
+    IF x > 3 THEN
+    BEGIN
+        WRITE("x jest wieksze od 3");
+    END;
+END.
+```
+
+Opis działania:
+
+1. Program przypisuje wartość `5` do zmiennej `x`.
+2. Następnie sprawdza warunek `x > 3`.
+3. Ponieważ warunek jest prawdziwy, program wypisuje komunikat:
+   `"x jest wieksze od 3"`.
+
+Przykładowy wynik:
+
+```
+x jest wieksze od 3
+```
+
+Program pokazuje działanie:
+
+* zmiennych,
+* przypisania wartości,
+* instrukcji warunkowej `IF`,
+* instrukcji wyjścia `WRITE`.
+
