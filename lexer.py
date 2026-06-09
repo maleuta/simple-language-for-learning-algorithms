@@ -12,7 +12,7 @@ reserved = {
 # Lista tokenów (łączymy nasze tokeny ze słowami kluczowymi)
 tokens = [
     'STR', 'IDENTIFIER', 'FLOAT', 'INTEGER',
-    'ASSIGN', 'RELOP', 'ADD_OP', 'MULT_OP',
+    'ASSIGN', 'RELOP', 'ADD_OP',
     'LPAREN', 'RPAREN', 'LBRACKET', 'RBRACKET',
     'COMMA', 'SEMICOLON', 'DOT'
 ] + list(set(reserved.values()))
