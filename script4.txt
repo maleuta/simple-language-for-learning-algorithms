@@ -1,0 +1,13 @@
+BEGIN
+    WRITE("Podaj wiek:");
+    READ(wiek);
+
+    IF (wiek >= 18) AND (wiek < 100) THEN
+    BEGIN
+        WRITE("Jestes pelnoletni!");
+    END
+    ELSE
+    BEGIN
+        WRITE("Wiek poza standardowym zakresem.");
+    END;
+END.

@@ -1,0 +1,11 @@
+BEGIN
+    ARRAY Liczby[3];
+    Liczby[0] := 10;
+    Liczby[1] := 20;
+
+    // Próba dzielenia przez zero wywoła [BŁĄD SEMANTYCZNY]
+    x := Liczby[0] / 0;
+
+    // Próba zapisu do indeksu poza rozmiarem wywoła [BŁĄD SEMANTYCZNY]
+    Liczby[5] := 100;
+END.
