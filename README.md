@@ -188,9 +188,79 @@ Otwórz terminal w katalogu z projektem i wykonaj polecenie:
 
 5. W konsoli pojawią się ewentualne komunikaty wykonania (efekty instrukcji WRITE) lub prośby o wprowadzenie danych (READ).
 
-## 7. Przykładowy program:
+
+## 7. Obsługa błędów (Error Handling)
+
+Nasz interpreter posiada podwójną warstwę wykrywania błędów, co ułatwia naukę algorytmiki bez ryzyka nagłego przerwania pracy systemu przez niezrozumiały rzut z wewnątrz języka Python:
+
+1. **Błędy Syntaktyczne (Składniowe):** Wykrywane na etapie parsowania przez generator PLY. Pokazują, w której linii kodu wystąpił literówka, brakujący średnik, lub nieoczekiwany token.
+2. **Błędy Semantyczne (Wykonywania):** Zgłaszane podczas działania drzewa AST w czasie rzeczywistym. System posiada komunikaty `[BŁĄD SEMANTYCZNY]` dla:
+   - Dzielenia przez zero.
+   - Odwołania do niezainicjowanej (nieistniejącej) zmiennej.
+   - Odwołania do nieistniejącego indeksu tablicy (Index Out Of Bounds).
+   - Tworzenia tablic o zerowym lub ujemnym rozmiarze.
+   - Wykonywania operacji matematycznych na niezgodnych typach danych (np. dodawanie ciągów znaków do liczb logicznych).
+
+## 8. Przykłady algorytmów (Przykłady użycia)
+
+Oto kody demonstrujące możliwości języka. Możesz je wkleić bezpośrednio w nowo wbudowanym **Trybie Interaktywnym (REPL)**:
+
+### Przykład 1: Klasyczny ciąg Fibonacciego (Pętle i przypisania)
+```pascal
+BEGIN
+    WRITE("Ile wyrazow ciagu Fibonacciego wypisac?");
+    READ(n);
+
+    a := 0;
+    b := 1;
+
+    FOR i := 1 TO n DO
+    BEGIN
+        WRITE(a);
+        temp := a + b;
+        a := b;
+        b := temp;
+    END;
+END.
 
 
+## 7. Obsługa błędów (Error Handling)
+
+Nasz interpreter posiada podwójną warstwę wykrywania błędów, co ułatwia naukę algorytmiki bez ryzyka nagłego przerwania pracy systemu przez niezrozumiały rzut z wewnątrz języka Python:
+
+1. **Błędy Syntaktyczne (Składniowe):** Wykrywane na etapie parsowania przez generator PLY. Pokazują, w której linii kodu wystąpił literówka, brakujący średnik, lub nieoczekiwany token.
+2. **Błędy Semantyczne (Wykonywania):** Zgłaszane podczas działania drzewa AST w czasie rzeczywistym. System posiada komunikaty `[BŁĄD SEMANTYCZNY]` dla:
+   - Dzielenia przez zero.
+   - Odwołania do niezainicjowanej (nieistniejącej) zmiennej.
+   - Odwołania do nieistniejącego indeksu tablicy (Index Out Of Bounds).
+   - Tworzenia tablic o zerowym lub ujemnym rozmiarze.
+   - Wykonywania operacji matematycznych na niezgodnych typach danych (np. dodawanie ciągów znaków do liczb logicznych).
+
+## 8. Przykłady algorytmów (Przykłady użycia)
+
+Oto kody demonstrujące możliwości języka. Możesz je wkleić bezpośrednio w nowo wbudowanym **Trybie Interaktywnym (REPL)**:
+
+### Przykład 1: Klasyczny ciąg Fibonacciego (Pętle i przypisania)
+```pascal
+BEGIN
+    WRITE("Ile wyrazow ciagu Fibonacciego wypisac?");
+    READ(n);
+
+    a := 0;
+    b := 1;
+
+    FOR i := 1 TO n DO
+    BEGIN
+        WRITE(a);
+        temp := a + b;
+        a := b;
+        b := temp;
+    END;
+END.
+```
+
+
+### Przykład 2:
 ```
 BEGIN
     x := 5;
@@ -221,4 +291,3 @@ Program pokazuje działanie:
 * przypisania wartości,
 * instrukcji warunkowej `IF`,
 * instrukcji wyjścia `WRITE`.
-
