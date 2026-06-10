@@ -277,11 +277,46 @@ def p_factor(p):
         p[0] = ('UNARY', p[1], p[2])
 
 
+def p_factor_missing_rparen(p):
+    '''factor : LPAREN expression error'''
+    print("Błąd składni: brakujący ')'")
+    p[0] = p[2]
+
+
+def p_factor_missing_rbracket(p):
+    '''factor : IDENTIFIER LBRACKET expression error'''
+    print("Błąd składni: brakujący ']'")
+    p[0] = ('ARRAY_GET', p[1], p[3])
+
+
+def p_function_call_stmt_missing_rparen(p):
+    '''function_call_stmt : IDENTIFIER LPAREN arg_list error'''
+    print("Błąd składni: brakujący ')'")
+    p[0] = ('CALL', p[1], p[3] if p[3] else [])
+
+
+def p_write_stmt_missing_rparen(p):
+    '''write_stmt : WRITE LPAREN expression error'''
+    print("Błąd składni: brakujący ')'")
+    p[0] = ('WRITE', p[3])
+
+
+def p_read_stmt_missing_rparen(p):
+    '''read_stmt : READ LPAREN IDENTIFIER error'''
+    print("Błąd składni: brakujący ')'")
+    p[0] = ('READ', p[3])
+
+
 # =========================
 # OBSLUGA BŁĘDÓW
 # =========================
 
+syntax_error = False
+
+
 def p_error(p):
+    global syntax_error
+    syntax_error = True
     if p:
         print(f"Błąd składni w okolicach tokena '{p.value}' (linia {p.lineno})")
     else:
@@ -293,153 +328,191 @@ parser = yacc.yacc()
 
 
 # =========================
-# OBSŁUGA BŁĘDÓW SEMANTYCZNYCH
-# =========================
-class SemanticError(Exception):
-    pass
-
-# =========================
 # EXPRESSION EVALUATION
 # =========================
+
 def evaluate_expression(expr):
+
     if isinstance(expr, (int, float, str, bool)):
         return expr
+
     if expr is None:
         return None
 
     op = expr[0]
 
+    # VARIABLE
     if op == 'VAR':
-        if expr[1] not in variables:
-            raise SemanticError(f"Użycie niezainicjowanej zmiennej '{expr[1]}'.")
-        return variables[expr[1]]
+        return variables.get(expr[1], 0)
 
+    # BINARY OPERATION
     elif op == 'BINOP':
+
         operator = expr[1]
-        l_val = evaluate_expression(expr[2])
-        r_val = evaluate_expression(expr[3])
+        left = expr[2]
+        right = expr[3]
 
-        # Sprawdzanie dzielenia przez zero
-        if operator in ('/', 'MOD') and r_val == 0:
-            raise SemanticError("Dzielenie przez zero jest niedozwolone!")
+        l_val = evaluate_expression(left)
+        r_val = evaluate_expression(right)
 
-        # Sprawdzanie zgodności typów dla operacji matematycznych
-        if operator in ('+', '-', '*', '/', '>', '<', '>=', '<='):
-            if type(l_val) != type(r_val) and not (isinstance(l_val, (int, float)) and isinstance(r_val, (int, float))):
-                raise SemanticError(f"Niezgodność typów! Nie można wykonać '{operator}' między {type(l_val).__name__} a {type(r_val).__name__}.")
+        if operator == '+':
+            return l_val + r_val
 
-        if operator == '+': return l_val + r_val
-        elif operator == '-': return l_val - r_val
-        elif operator == '*': return l_val * r_val
-        elif operator == '/': return l_val / r_val
-        elif operator == '>': return l_val > r_val
-        elif operator == '<': return l_val < r_val
-        elif operator == '==': return l_val == r_val
-        elif operator == '!=': return l_val != r_val
-        elif operator == '>=': return l_val >= r_val
-        elif operator == '<=': return l_val <= r_val
-        elif operator == 'AND': return l_val and r_val
-        elif operator == 'OR': return l_val or r_val
+        elif operator == '-':
+            return l_val - r_val
 
+        elif operator == '*':
+            return l_val * r_val
+
+        elif operator == '/':
+            return l_val / r_val
+
+        elif operator == '>':
+            return l_val > r_val
+
+        elif operator == '<':
+            return l_val < r_val
+
+        elif operator == '==':
+            return l_val == r_val
+
+        elif operator == '!=':
+            return l_val != r_val
+
+        elif operator == '>=':
+            return l_val >= r_val
+
+        elif operator == '<=':
+            return l_val <= r_val
+
+        elif operator == 'AND':
+            return l_val and r_val
+
+        elif operator == 'OR':
+            return l_val or r_val
+
+    # NOT
     elif op == 'NOT':
         return not evaluate_expression(expr[1])
 
+    # UNARY
     elif op == 'UNARY':
+
         operator = expr[1]
         value = evaluate_expression(expr[2])
-        if operator == '-': return -value
+
+        if operator == '-':
+            return -value
+
         return value
 
-    elif op == 'ARRAY_GET':
-        if expr[1] not in variables:
-            raise SemanticError(f"Tablica '{expr[1]}' nie istnieje.")
-        idx = evaluate_expression(expr[2])
-        if idx < 0 or idx >= len(variables[expr[1]]):
-            raise SemanticError(f"Indeks {idx} wykracza poza rozmiar tablicy '{expr[1]}'.")
-        return variables[expr[1]][idx]
-    
     return 0
+
 
 # =========================
 # EXECUTOR
 # =========================
+
 def execute_ast(node):
+
     if node is None:
         return
+
     op = node[0]
 
+    # PROGRAM
     if op == 'PROGRAM':
         execute_ast(node[2])
 
+    # BLOCK
     elif op == 'BLOCK':
         for stmt in node[1]:
             if stmt:
                 execute_ast(stmt)
 
+    # WRITE
     elif op == 'WRITE':
         value = evaluate_expression(node[1])
         print(value)
 
+    # READ
     elif op == 'READ':
+
         val = input(f"{node[1]} = ")
+
         try:
             variables[node[1]] = int(val)
+
         except ValueError:
             try:
                 variables[node[1]] = float(val)
+
             except ValueError:
                 variables[node[1]] = val
 
+    # ASSIGN
     elif op == 'ASSIGN':
+
         value = evaluate_expression(node[2])
+
         variables[node[1]] = value
 
+    # IF
     elif op == 'IF':
+
         condition = evaluate_expression(node[1])
+
         if condition:
             execute_ast(node[2])
+
         elif node[3]:
             execute_ast(node[3])
 
+    # WHILE
     elif op == 'WHILE':
+
         while evaluate_expression(node[1]):
             execute_ast(node[2])
 
+    # FOR
     elif op == 'FOR':
+
         var_name = node[1]
+
         start_val = evaluate_expression(node[2])
         end_val = evaluate_expression(node[3])
+
         variables[var_name] = start_val
+
         while variables[var_name] <= end_val:
+
             execute_ast(node[4])
+
             variables[var_name] += 1
 
-    elif op == 'ARRAY_DECL':
-        rozmiar = evaluate_expression(node[2])
-        if rozmiar <= 0:
-             raise SemanticError("Rozmiar tablicy musi być większy od 0.")
-        variables[node[1]] = [0] * rozmiar
-
-    elif op == 'ARRAY_ASSIGN':
-        if node[1] not in variables:
-             raise SemanticError(f"Tablica '{node[1]}' nie istnieje.")
-        wartosc = evaluate_expression(node[3])
-        indeks = evaluate_expression(node[2])
-        if indeks < 0 or indeks >= len(variables[node[1]]):
-            raise SemanticError(f"Indeks {indeks} wykracza poza rozmiar tablicy '{node[1]}'.")
-        variables[node[1]][indeks] = wartosc
 
 # =========================
-# MAIN INTERPRETER ENTRY
+# MAIN INTERPRETER
 # =========================
+
 def run_interpreter(code):
-    # Wyczyszczenie zmiennych przy każdym uruchomieniu (ważne dla trybu interaktywnego)
-    variables.clear() 
+
+    global syntax_error
+
+    syntax_error = False
+
     ast = parser.parse(code)
+
+
+    if syntax_error:
+        print("\nBłąd syntaktyczny.")
+        return
+
+
+    print("\n===== AST =====")
+    print(ast)
+    print("================\n")
+
+
     if ast:
-        try:
-            execute_ast(ast)
-        except SemanticError as e:
-            print(f"\n[BŁĄD SEMANTYCZNY]: {e}")
-        except Exception as e:
-            print(f"\n[BŁĄD KRYTYCZNY INTERPRETERA]: {e}")
+        execute_ast(ast)
