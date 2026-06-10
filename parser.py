@@ -277,34 +277,86 @@ def p_factor(p):
         p[0] = ('UNARY', p[1], p[2])
 
 
-def p_factor_missing_rparen(p):
-    '''factor : LPAREN expression error'''
-    print("Błąd składni: brakujący ')'")
-    p[0] = p[2]
+def check_brackets(code):
+
+    stack = []
+
+    pairs = {
+        ')': '(',
+        ']': '['
+    }
+
+    line = 1
+    in_string = False
 
 
-def p_factor_missing_rbracket(p):
-    '''factor : IDENTIFIER LBRACKET expression error'''
-    print("Błąd składni: brakujący ']'")
-    p[0] = ('ARRAY_GET', p[1], p[3])
+    for char in code:
 
 
-def p_function_call_stmt_missing_rparen(p):
-    '''function_call_stmt : IDENTIFIER LPAREN arg_list error'''
-    print("Błąd składni: brakujący ')'")
-    p[0] = ('CALL', p[1], p[3] if p[3] else [])
+        if char == '\n':
+            line += 1
 
 
-def p_write_stmt_missing_rparen(p):
-    '''write_stmt : WRITE LPAREN expression error'''
-    print("Błąd składni: brakujący ')'")
-    p[0] = ('WRITE', p[3])
+        if char == '"':
+            in_string = not in_string
+            continue
 
 
-def p_read_stmt_missing_rparen(p):
-    '''read_stmt : READ LPAREN IDENTIFIER error'''
-    print("Błąd składni: brakujący ')'")
-    p[0] = ('READ', p[3])
+        if in_string:
+            continue
+
+
+
+        if char in "([":
+            stack.append((char, line))
+
+
+
+        elif char in ")]":
+
+
+            if not stack:
+                print(
+                    f"Błąd składni: nieoczekiwana '{char}' "
+                    f"(linia {line})"
+                )
+                return False
+
+
+
+            last, start_line = stack.pop()
+
+
+            if pairs[char] != last:
+
+                print(
+                    f"Błąd składni: zła para nawiasów "
+                    f"(linia {start_line})"
+                )
+
+                return False
+
+
+
+    if stack:
+
+        bracket, line = stack[-1]
+
+        if bracket == '(':
+            expected = ')'
+        else:
+            expected = ']'
+
+
+        print(
+            f"Błąd składni: brakujący '{expected}' "
+            f"(linia {line})"
+        )
+
+        return False
+
+
+    return True
 
 
 # =========================
@@ -501,12 +553,12 @@ def run_interpreter(code):
 
     syntax_error = False
 
-    ast = parser.parse(code)
 
-
-    if syntax_error:
-        print("\nBłąd syntaktyczny.")
+    if not check_brackets(code):
         return
+
+
+    ast = parser.parse(code)
 
 
     print("\n===== AST =====")
